@@ -1,13 +1,175 @@
+body {
+    background-color: #ffffff;
+    background-image: 
+        linear-gradient(90deg, rgba(0,0,0,.05) 1px, transparent 1px),
+        linear-gradient(rgba(0,0,0,.05) 1px, transparent 1px);
+    background-size: 20px 20px;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+}
 
-.Title > * {
-  margin: 50px;
-  margin-right: 200px;
-  border: 2px solid #333;
-    box-shadow: 4px 4px 0 #333,
-                8px 8px 0 #666;
-    background-color: #fff;
-    transform: rotate(-2deg);
+/* Add depth with a subtle overlay */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        45deg,
+        rgba(255,255,255,0.2) 25%,
+        transparent 25%,
+        transparent 75%,
+        rgba(255,255,255,0.2) 75%
+    );
+    background-size: 60px 60px;
+    pointer-events: none;
+}
+
+/* Optional: Add a subtle paper texture */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+/* Make the container stand out against the mesh */
+.squaredivs {
+    display: flex;
+    flex-wrap: wrap;
+    width: 586px;
+    height: 586px;
     justify-self: center;
+    background-color: #ffffff;  /* White paper background */
+    border: 1px solid #ccc;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);  /* Subtle shadow */
+    position: relative;
+    border-radius: 2px;
+}
+
+/* Add paper texture */
+.squaredivs::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        45deg,
+        rgba(0,0,0,0.02) 25%,
+        transparent 25%,
+        transparent 75%,
+        rgba(0,0,0,0.02) 75%
+    );
+    background-size: 60px 60px;
+    pointer-events: none;
+}
+
+/* Grid lines */
+.squares {
+    width: calc(100% / var(--grid-size));
+    aspect-ratio: 1 / 1;
+    box-sizing: border-box;
+    border: 0.5px solid rgba(0, 0, 0, 0.1);  /* Lighter grid lines */
+    margin: 0;
+    padding: 0;
+    background-color: white;
+    transition: background-color 0.2s ease;
+}
+
+/* Add paper edge effect */
+.squaredivs::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    box-shadow: inset 0 0 30px rgba(0,0,0,0.1);
+    pointer-events: none;
+    border-radius: 2px;
+}
+
+/* Optional: Add slight texture to squares */
+.squares:hover {
+    background-color: rgba(0,0,0,0.02);
+}
+
+/* When squares are colored */
+.squares.colored {
+    background-color: #4a4a4a;
+    border-color: transparent;
+}
+
+/* Container shadow for depth */
+.game-container {
+    padding: 20px;
+    /* background: linear-gradient(
+        to bottom,
+        transparent,
+        rgba(0,0,0,0.05)
+    ); */
+    border-radius: 4px;
+}
+
+.Title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.Title h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    color: #333;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.author-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1rem;
+    color: #666;
+    padding-top: 5px;
+    border-top: 2px solid #eee;
+    width: fit-content;
+}
+
+.author-info a {
+    display: flex;
+    align-items: center;
+    gap: 8px;  /* Increased gap between name and icon */
+    text-decoration: none;
+    color: #333;
+    transition: all 0.3s ease;
+}
+
+.author-info a:hover {
+    color: #6c5ce7;
+    transform: translateY(-1px);
+}
+
+.author-info i {
+    font-size: 20px;
+    margin-left: 4px;  /* Added extra space before the icon */
+}
+
+/* Optional: Add animation to the GitHub icon on hover */
+.author-info a:hover i {
+    transform: rotate(360deg);
+    transition: transform 0.6s ease;
 }
 
 .GridButton{
@@ -29,35 +191,139 @@
   gap: 10px;
 }
 
-
-.game-container {
-  display: flex;
-  position: relative;
-  width: fit-content;
-  margin: 0 auto;
-}
-
 :root{
 
   --grid-size: 16;
 }
-.squaredivs{
-        display: flex;
-        flex-wrap: wrap;
-        width: 586px;
-        height: 586px;
-        justify-self: center;
-      }
-.squares{
-    width: calc(100% / var(--grid-size));
-    aspect-ratio: 1 / 1;
-    box-sizing: border-box;
-    outline: 1px solid #ccc; 
-    margin: 0;
-    padding: 0;
-  }
 
-.colored {
-    background-color: #4a4a4a !important; /* or any color you prefer */
+.randomColour{
+  background-color: rgb(0,256,1);
+
+}
+
+/* Drawing mode */
+.draw-mode .squares {
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>') 0 24, auto;
+}
+
+/* Eraser mode */
+.erase-mode .squares {
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M15.14 3c-.51 0-1.02.2-1.41.59L2.59 14.73c-.78.78-.78 2.05 0 2.83L7.17 22h9.66l5.17-5.17c.78-.78.78-2.05 0-2.83L11.86 3.59c-.39-.39-.9-.59-1.41-.59z"/></svg>') 0 24, auto;
+}
+
+/* Random color mode */
+.random-mode .squares {
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>') 0 24, auto;
+}
+
+/* Common button styles */
+.GridButton button, .rightButtons button {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 20px;
+    margin: 8px;
+    border: 2px solid;
+    border-radius: 8px;
+    background-color: white;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 200px;
+    position: relative;
+}
+
+/* New Grid Layout Button */
+#gridValue {
+    border-color: #6c5ce7;
+    color: #6c5ce7;
+}
+
+#gridValue:hover {
+    background-color: #6c5ce7;
+    color: white;
+    transform: scale(1.02);
+}
+
+/* Random Mode Button */
+#randomMode {
+    border-color: #00b894;
+    color: #00b894;
+}
+
+#randomMode:hover {
+    background-color: #00b894;
+    color: white;
+    transform: scale(1.02);
+}
+
+/* Reset Grid Button */
+#resetButton {
+    border-color: #ff7675;
+    color: #ff7675;
+}
+
+#resetButton:hover {
+    background-color: #ff7675;
+    color: white;
+    transform: scale(1.02);
+}
+
+/* Eraser Button */
+#Eraser {
+    border-color: #74b9ff;
+    color: #74b9ff;
+}
+
+#Eraser:hover {
+    background-color: #74b9ff;
+    color: white;
+    transform: scale(1.02);
+}
+
+/* Normal Draw Mode Button */
+#Draw {
+    border-color: #a8e6cf;
+    color: #a8e6cf;
+}
+
+#Draw:hover {
+    background-color: #a8e6cf;
+    color: white;
+    transform: scale(1.02);
+}
+
+/* Shortcut text style */
+.shortcut {
+    position: absolute;
+    right: 10px;
+    font-size: 12px;
+    opacity: 0.7;
+}
+
+/* Button containers alignment */
+.game-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.GridButton {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.rightButtons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Active state for buttons */
+.active-mode {
+    background-color: var(--button-color) !important;
+    color: white !important;
 }
 
